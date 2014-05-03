@@ -1,12 +1,11 @@
 public class BinaryHeap {
     private int[] array;
-    private static final int DEFAULT_SIZE = 101; // default size
-    private int root = 0;
+    private static final int DEFAULT_SIZE = 100; // default size
     private int totalSwaps = 0;
 
-    // Init given an unsorted array
+    // Init given an unsorted array (optimal method)
     public BinaryHeap(int[] passed) {
-        array = new int[2*passed.length];
+        array = new int[passed.length];
 
         for (int i = 0; i < passed.length; i++)
             array[i] = passed[i];
@@ -19,11 +18,12 @@ public class BinaryHeap {
         array[0] = root;
     }
 
+    // Getter for analyzing complexity
     public int getSwaps() {
         return totalSwaps;
     }
 
-    // swap the values at two indices 
+    // Swap the values at two indices 
     private void swap(int i, int j) {
         int temp = array[i];
         array[i] = array[j];
@@ -31,7 +31,7 @@ public class BinaryHeap {
         totalSwaps += 1;
     }
 
-    // return the index that holds the greater values
+    // Return the index that holds the greater values
     private int max(int i, int j) {
         if (array[i] > array[j])
             return i;
@@ -41,22 +41,22 @@ public class BinaryHeap {
             return i;
     }
 
-    // value of parent
+    // Value of parent (For readability)
     private int parent(int i) {
         return array[(i - 1) / 2];
     }
 
-    // value of left child
+    // Value of left child (For readability)
     private int left(int i) {
         return array[(2 * i) + 1];
     }
 
-    // value of right child
+    // Value of right child (For readability)
     private int right(int i) {
         return array[(2 * i) + 2];
     }
 
-    // value at index
+    // Value at index (For readability)
     private int value(int i) {
         return array[i];
     }
@@ -80,30 +80,33 @@ public class BinaryHeap {
 
     // Sift down
     private void heapifyDown() {
-        int p, k = 0;
         for (int i = 0; i < array.length; i++)
         {
-            if ((i*2)+1 > array.length-1)
+            if ((i*2)+1 > array.length - 1)
                 break;
             else
             {
-                if (value(i) < left(i) && value(i) < right(i))
+                print();
+                System.out.println(i);
+                if (!((i*2)+2 > array.length - 1))
                 {
-                    swap(i, max(((2*i)+1), ((2*i)+2))); // swap(i, max(left, right))
-                    i = 0;
+                    if (value(i) < left(i) && value(i) < right(i))
+                    {
+                        swap(i, max(((2*i)+1), ((2*i)+2))); // swap(i, max(left, right))
+                        i = 0;
+                    }
+                    else if (value(i) < right(i))
+                    {
+                        swap(i, (2*i)+2); // swap(i, right)
+                        i = 0;
+                    }
                 }
-                else if (value(i) < left(i))
+                if (value(i) < left(i))
                 {
                     swap(i, (2*i)+1); // swap(i, left)
                     i = 0;
                 }
-                else if (value(i) < right(i))
-                {
-                    swap(i, (2*i)+2); // swap(i, right)
-                    i = 0;
-                }
-                print();
-                System.out.println();
+                
             }
         }
     }
