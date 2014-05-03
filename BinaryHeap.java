@@ -116,6 +116,20 @@ public class BinaryHeap {
         System.out.println();
     }
 
+    // Print the first X digits of the array
+    public void printXDigits(int x) {
+        if (x <= array.length - 1)
+        {
+            for (int i = 0; i < x; i++)
+                System.out.print(array[i] + " ");
+        }
+        else
+        {
+            for (int j = 0; j < array.length - 1; j++)
+                System.out.print(array[j] + " ");
+        }
+    }
+
     // Add a new node
     public void addNode(int value) {
         for (int j = 0; j < array.length; j++)
