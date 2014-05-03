@@ -12,9 +12,7 @@ public class BinaryHeap {
 
     public BinaryHeap(int root) {
         array = new int[DEFAULT_SIZE];
-        array[1] = root;
-        for (int i = 2; i < DEFAULT_SIZE; i++)
-            array[i] = null;
+        array[0] = root;
     }
 
     // swap the values at two indices 
@@ -62,7 +60,11 @@ public class BinaryHeap {
                 continue;
             else
             {
-                
+                if (value(i) > parent(i))
+                {
+                    swap(i, (i-1)/2); // swap(i, parent)
+                    i = array.length - 1;
+                }
             }
         }
     }
@@ -78,7 +80,7 @@ public class BinaryHeap {
             {
                 if (value(i) < left(i) && value(i) < right(i))
                 {
-                    swap(i, max(((2*i)+1), ((2*i)+2)); // swap(i, max(left, right))
+                    swap(i, max(((2*i)+1), ((2*i)+2))); // swap(i, max(left, right))
                     i = 0;
                 }
                 else if (value(i) < left(i))
@@ -95,10 +97,16 @@ public class BinaryHeap {
         }
     }
 
+    public void print() {
+        for (int i = 0; i < array.length; i++)
+            System.out.print(array[i] + " ");
+        System.out.println();
+    }
+
     public void addNode(int value) {
-        for (int j = 1; j < array.length; j++)
+        for (int j = 0; j < array.length; j++)
         {
-            if (array[j] == null)
+            if (array[j] == 0)
             {
                 array[j] = value;
                 break;
@@ -106,8 +114,8 @@ public class BinaryHeap {
             else 
                 continue;
         }
-        heapify();
-    }
+        heapifyUp();
+    } 
 
     public void removeRoot() {
 
