@@ -2,17 +2,25 @@ public class BinaryHeap {
     private int[] array;
     private static final int DEFAULT_SIZE = 101; // default size
     private int root = 0;
+    private int totalSwaps = 0;
 
+    // Init given an unsorted array
     public BinaryHeap(int[] passed) {
         array = new int[2*passed.length];
 
         for (int i = 0; i < passed.length; i++)
             array[i] = passed[i];
+        heapifyDown();
     }
 
+    // Init givin root node
     public BinaryHeap(int root) {
         array = new int[DEFAULT_SIZE];
         array[0] = root;
+    }
+
+    public int getSwaps() {
+        return totalSwaps;
     }
 
     // swap the values at two indices 
@@ -20,6 +28,7 @@ public class BinaryHeap {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
+        totalSwaps += 1;
     }
 
     // return the index that holds the greater values
@@ -74,7 +83,7 @@ public class BinaryHeap {
         int p, k = 0;
         for (int i = 0; i < array.length; i++)
         {
-            if ((i*2)+1 > array.length)
+            if ((i*2)+1 > array.length-1)
                 break;
             else
             {
@@ -93,16 +102,20 @@ public class BinaryHeap {
                     swap(i, (2*i)+2); // swap(i, right)
                     i = 0;
                 }
+                print();
+                System.out.println();
             }
         }
     }
 
+    // Print the array for debugging
     public void print() {
         for (int i = 0; i < array.length; i++)
             System.out.print(array[i] + " ");
         System.out.println();
     }
 
+    // Add a new node
     public void addNode(int value) {
         for (int j = 0; j < array.length; j++)
         {
@@ -117,9 +130,9 @@ public class BinaryHeap {
         heapifyUp();
     } 
 
+    // Remove the root
     public void removeRoot() {
-
+        array[0] = 0;
+        heapifyDown();
     }
-
-
 }
