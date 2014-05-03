@@ -31,7 +31,7 @@ public class BinaryHeap {
         totalSwaps += 1;
     }
 
-    // Return the index that holds the greater values
+    // Return the index that holds the greater value
     private int max(int i, int j) {
         if (array[i] > array[j])
             return i;
@@ -86,8 +86,6 @@ public class BinaryHeap {
                 break;
             else
             {
-                print();
-                System.out.println(i);
                 if (!((i*2)+2 > array.length - 1))
                 {
                     if (value(i) < left(i) && value(i) < right(i))
