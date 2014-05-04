@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.Scanner;
+import java.util.InputMismatchException;
+import java.util.Random;
 
 public class Test {
     public static void main(String[] args) {
@@ -13,7 +15,7 @@ public class Test {
         {
             System.out.println("\nEnter option 1, 2 or 3 for:" + 
                             "\n1.) Report on 20 sets of 100 random integers" +
-                            "\n2.) Print first 10 values" + 
+                            "\n2.) Print first 10 values, stats, remove 10, first 10" + 
                             "\n3.) Exit");
             result = 0;
             try
@@ -27,13 +29,26 @@ public class Test {
                     for (int p = 0; p < 20; p++)
                     {
                         heap = new BinaryHeap(0);
-                        for (int k = 0; k < 100; k++)
-                            a[k] = r.nextInt(500 -1) + 1;
 
-                        for (int i = 0; i < 100; i++)
-                            heap.addNode(a[i]);
+                        while (!heap.isFull())
+                        {
+                            int temp = r.nextInt(1000 -1) + 1;
+                            // This is so we don't add duplicates
+                            if (!heap.contains(temp))
+                            {
+                                heap.addNode(temp);
+                                // append temp to a
+                                for (int k = 0; k < 100; k++)
+                                {
+                                    if (a[k] == 0)
+                                    {
+                                        a[k] = temp;
+                                        break;
+                                    }
+                                }       
+                            }
+                        }
                         total += heap.getSwaps();
-                        //System.out.println(p);
                         //System.out.println("number of swaps for insertion: " + heap.getSwaps());
 
                         BinaryHeap heap2 = new BinaryHeap(a);
@@ -52,8 +67,8 @@ public class Test {
 
                     for (int z = 0; z < 100; z++)
                     {
-                        a[z] = r.nextInt(500 - 1) + 1;
-                        if (z <= 20)
+                        a[z] = r.nextInt(1000 - 1) + 1;
+                        if (z <= 10)
                             System.out.print(a[z] + " ");
                         heap.addNode(a[z]);
                     }
@@ -61,8 +76,8 @@ public class Test {
                     System.out.println("... etc. \nSwaps for insertions: " + heap.getSwaps());
 
                     BinaryHeap heap2 = new BinaryHeap(a);
+                    heap2.print();
                     System.out.println("Swaps for optimal method: " + heap2.getSwaps());
-
                     System.out.println("Now performing 10 removals: ");
                     
                     for (int c = 0; c < 10; c++)
@@ -82,8 +97,7 @@ public class Test {
                     continue;
             }
             catch (InputMismatchException e) {
-                System.out.println("CAUGHT EXCEPTION");
-                kb.nextLine();
+                kb.nextLine(); // clear kb
             }
         }
 

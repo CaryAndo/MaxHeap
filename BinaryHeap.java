@@ -130,6 +130,26 @@ public class BinaryHeap {
         }
     }
 
+    // Test if heap contains a value x
+    public boolean contains(int x) {
+        for (int i = 0; i < array.length - 1; i++)
+        {
+            if (array[i] == x)
+                return true;
+        }
+        return false;    
+    }
+
+    // Test if the heap is full
+    public boolean isFull() {
+        for (int i = 0; i < array.length - 1; i++)
+        {
+            if (array[i] == 0)
+                return false;
+        }
+        return true;
+    }
+
     // Add a new node
     public void addNode(int value) {
         for (int j = 0; j < array.length; j++)
