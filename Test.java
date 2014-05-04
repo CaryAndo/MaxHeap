@@ -6,6 +6,7 @@ public class Test {
     public static void main(String[] args) {
         int[] a = new int[100];
         BinaryHeap heap = new BinaryHeap(0);
+        BinaryHeap heap2;
         Random r = new Random();
         Scanner kb = new Scanner(System.in);
         boolean flag = false;
@@ -18,6 +19,7 @@ public class Test {
                             "\n2.) Print first 10 values, stats, remove 10, first 10" + 
                             "\n3.) Exit");
             result = 0;
+            a = new int[100];
             try
             {
                 result = kb.nextInt();
@@ -51,7 +53,7 @@ public class Test {
                         total += heap.getSwaps();
                         //System.out.println("number of swaps for insertion: " + heap.getSwaps());
 
-                        BinaryHeap heap2 = new BinaryHeap(a);
+                        heap2 = new BinaryHeap(a);
                         totalOp += heap2.getSwaps();
                         //System.out.println("number of swaps for optimal: "+ heap2.getSwaps());
                     }
@@ -62,21 +64,35 @@ public class Test {
                 else if (result == 2)
                 {
                     heap = new BinaryHeap(0);
-                    
+
+                    while (!heap.isFull())
+                    {
+                        int temp = r.nextInt(1000 - 1) + 1;
+                        if (!heap.contains(temp))
+                        {
+                            heap.addNode(temp);
+
+                            for (int t = 0; t < 100; t++)
+                            {
+                                if (a[t] == 0)
+                                {
+                                    a[t] = temp;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
                     System.out.print("\nBuilding heap with: ");
 
-                    for (int z = 0; z < 100; z++)
+                    for (int z = 0; z < 10; z++)
                     {
-                        a[z] = r.nextInt(1000 - 1) + 1;
-                        if (z <= 10)
-                            System.out.print(a[z] + " ");
-                        heap.addNode(a[z]);
+                        System.out.print(a[z] + " ");
                     }
 
                     System.out.println("... etc. \nSwaps for insertions: " + heap.getSwaps());
 
-                    BinaryHeap heap2 = new BinaryHeap(a);
-                    heap2.print();
+                    heap2 = new BinaryHeap(a);
                     System.out.println("Swaps for optimal method: " + heap2.getSwaps());
                     System.out.println("Now performing 10 removals: ");
                     
@@ -100,7 +116,5 @@ public class Test {
                 kb.nextLine(); // clear kb
             }
         }
-
-        
     }
 }
